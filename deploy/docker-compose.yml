@@ -1,0 +1,59 @@
+version: '3.9'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./deploy/Dockerfile
+    image: airmro_management:${AIRMRO_MANAGEMENT_VERSION:-latest}
+    restart: always
+    env_file:
+    - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      AIRMRO_MANAGEMENT_HOST: 0.0.0.0
+      AIRMRO_MANAGEMENT_DB_HOST: airmro_management-db
+      AIRMRO_MANAGEMENT_DB_PORT: 3306
+      AIRMRO_MANAGEMENT_DB_USER: airmro_management
+      AIRMRO_MANAGEMENT_DB_PASS: airmro_management
+      AIRMRO_MANAGEMENT_DB_BASE: airmro_management
+
+  db:
+    image: bitnami/mysql:8.0.28
+    hostname: airmro_management-db
+    restart: always
+    environment:
+      MYSQL_ROOT_USER: "airmro_management"
+      MYSQL_ROOT_PASSWORD: "airmro_management"
+      MYSQL_DATABASE: "airmro_management"
+      MYSQL_AUTHENTICATION_PLUGIN: "mysql_native_password"
+    healthcheck:
+      test: mysqladmin ping -h localhost
+      interval: 10s
+      timeout: 5s
+      retries: 40
+    volumes:
+    - airmro_management-db-data:/bitnami/mysql/data
+
+  migrator:
+    image: airmro_management:${AIRMRO_MANAGEMENT_VERSION:-latest}
+    restart: "no"
+    command: alembic upgrade head
+    environment:
+      AIRMRO_MANAGEMENT_DB_HOST: airmro_management-db
+      AIRMRO_MANAGEMENT_DB_PORT: 3306
+      AIRMRO_MANAGEMENT_DB_USER: airmro_management
+      AIRMRO_MANAGEMENT_DB_PASS: airmro_management
+      AIRMRO_MANAGEMENT_DB_BASE: airmro_management
+    depends_on:
+      db:
+        condition: service_healthy
+
+
+
+
+volumes:
+  airmro_management-db-data:
+    name: airmro_management-db-data
