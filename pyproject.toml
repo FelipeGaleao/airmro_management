@@ -40,6 +40,7 @@ anyio = "^3.5.0"
 pytest-env = "^0.6.2"
 requests = "^2.26.0"
 httpx = "^0.22.0"
+autopep8 = "^1.6.0"
 
 
 [tool.isort]

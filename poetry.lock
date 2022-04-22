@@ -105,6 +105,18 @@ python-versions = "*"
 pyflakes = ">=1.1.0"
 
 [[package]]
+name = "autopep8"
+version = "1.6.0"
+description = "A tool that automatically formats Python code to conform to the PEP 8 style guide"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+pycodestyle = ">=2.8.0"
+toml = "*"
+
+[[package]]
 name = "bandit"
 version = "1.7.4"
 description = "Security oriented static analyser for python code."
@@ -1224,7 +1236,7 @@ tokenize-rt = ">=2.1"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "d5b491d7e3d20ad67a5d72e183b47e643753e3b1c2804cf31d5f7602eb53e4df"
+content-hash = "223a4e97e705e9a68a86a3a8e810899e74903322bc6f6ad66814366d32ae0fd2"
 
 [metadata.files]
 aiofiles = [
@@ -1261,6 +1273,10 @@ attrs = [
 ]
 autoflake = [
     {file = "autoflake-1.4.tar.gz", hash = "sha256:61a353012cff6ab94ca062823d1fb2f692c4acda51c76ff83a8d77915fba51ea"},
+]
+autopep8 = [
+    {file = "autopep8-1.6.0-py2.py3-none-any.whl", hash = "sha256:ed77137193bbac52d029a52c59bec1b0629b5a186c495f1eb21b126ac466083f"},
+    {file = "autopep8-1.6.0.tar.gz", hash = "sha256:44f0932855039d2c15c4510d6df665e4730f2b8582704fa48f9c55bd3e17d979"},
 ]
 bandit = [
     {file = "bandit-1.7.4-py3-none-any.whl", hash = "sha256:412d3f259dab4077d0e7f0c11f50f650cc7d10db905d98f6520a95a18049658a"},
